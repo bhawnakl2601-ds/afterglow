@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Afterglow — Make Plans. Make Memories.</title>
+  
+  <!-- Google Fonts: Fraunces (Serif) & DM Sans (Sans-Serif) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS RESET & VARIABLES */
+    :root {
+      --color-cream: #FFF7E8;
+      --color-butter: #F6D66B;
+      --color-coral: #FF796C;
+      --color-coral-dark: #D9443D;
+      --color-lavender: #B9A5F8;
+      --color-mint: #9FD9BC;
+      --color-ink: #302D48;
+      --color-ink-subtle: #5E5B78;
+      --color-white: #FFFFFF;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-full: 9999px;
+      --font-serif: 'Fraunces', Georgia, serif;
+      --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --shadow-card: 0 8px 24px rgba(48, 45, 72, 0.08);
+      --shadow-pop: 4px 4px 0px #302D48;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      background-color: var(--color-cream);
+      color: var(--color-ink);
+      font-family: var(--font-sans);
+      line-height: 1.5;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-serif);
+      font-weight: 700;
+    }
+
+    /* UTILITY STYLES */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 48px;
+      padding: 12px 24px;
+      border-radius: var(--radius-full);
+      font-family: var(--font-sans);
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      border: 2px solid var(--color-ink);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background-color: var(--color-ink);
+      color: var(--color-white);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(48, 45, 72, 0.2);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-butter);
+      color: var(--color-ink);
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-pop);
+    }
+
+    .btn-coral {
+      background-color: var(--color-coral);
+      color: var(--color-ink);
+    }
+
+    .sticker-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 1.5px solid var(--color-ink);
+    }
+
+    .sticker-cozy { background-color: var(--color-butter); }
+    .sticker-sunny { background-color: var(--color-mint); }
+    .sticker-artsy { background-color: var(--color-lavender); }
+    .sticker-foodie { background-color: var(--color-coral); }
+
+    /* LAYOUT CONTAINERS */
+    .header-nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--color-ink);
+      text-decoration: none;
+    }
+
+    .hero-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: 56px;
+      line-height: 1.08;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      color: var(--color-ink-subtle);
+      margin-bottom: 32px;
+      max-width: 520px;
+    }
+
+    /* PHONE SIMULATOR FRAME */
+    .simulator-container {
+      position: relative;
+      width: 393px;
+      height: 820px;
+      background: var(--color-ink);
+      border-radius: 48px;
+      padding: 12px;
+      box-shadow: 0 24px 60px rgba(48, 45, 72, 0.25), 0 0 0 12px #201e30;
+      margin: 0 auto;
+    }
+
+    .simulator-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: var(--color-cream);
+      border-radius: 38px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .notch {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 28px;
+      background: var(--color-ink);
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      z-index: 100;
+    }
+
+    .status-bar {
+      height: 44px;
+      padding: 12px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 700;
+      z-index: 90;
+    }
+
+    .app-viewport {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 20px 80px;
+      scroll-behavior: smooth;
+    }
+
+    .app-viewport::-webkit-scrollbar { display: none; }
+
+    /* MOBILE NAVIGATION */
+    .bottom-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 72px;
+      background: rgba(255, 247, 232, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(48, 45, 72, 0.1);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 12px;
+      z-index: 90;
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-ink-subtle);
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: var(--radius-full);
+      transition: all 0.2s;
+    }
+
+    .nav-item.active {
+      color: var(--color-ink);
+      background-color: var(--color-butter);
+    }
+
+    /* SCREEN VIEWS */
+    .screen-view {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .screen-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CARD STYLING */
+    .activity-card {
+      background: var(--color-white);
+      border: 2px solid var(--color-ink);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow-pop);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+
+    .activity-card:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #302D48;
+    }
+
+    .card-img-placeholder {
+      width: 100%;
+      height: 140px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      position: relative;
+      border: 1.5px solid var(--color-ink);
+    }
+
+    .heart-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--color-white);
+      border: 1.5px solid var(--color-ink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* VIBE GRID */
+    .vibe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .vibe-card {
+      border: 2px solid var(--color-ink);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .vibe-card.selected {
+      box-shadow: var(--shadow-pop);
+      transform: translateY(-2px);
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast-notification {
+      position: absolute;
+      top: 60px;
+      left: 20px;
+      right: 20px;
+      background: var(--color-ink);
+      color: var(--color-white);
+      padding: 12px 18px;
+      border-radius: var(--radius-full);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transform: translateY(-80px);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 200;
+    }
+
+    .toast-notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* SYSTEM DESIGN SECTION */
+    .design-system-section {
+      background: var(--color-white);
+      border-top: 2px solid var(--color-ink);
+      padding: 80px 32px;
+    }
+
+    .ds-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .swatch-card {
+      border: 2px solid var(--color-ink);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      background: var(--color-cream);
+    }
+
+    .swatch-color {
+      height: 80px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--color-ink);
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-section {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-subtitle { margin: 0 auto 32px; }
+      .simulator-container { width: 100%; max-width: 393px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header-nav">
+    <a href="#" class="brand-logo">
+      <span>☀️</span> afterglow
+    </a>
+    <div style="display: flex; gap: 12px;">
+      <a href="#prototype" class="btn btn-secondary">Try Live Prototype</a>
+      <a href="#design-system" class="btn btn-primary">Design System</a>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div>
+      <span class="sticker-tag sticker-sunny" style="margin-bottom: 16px;">Social Discovery Concept</span>
+      <h1 class="hero-title">Make plans.<br>Make memories.</h1>
+      <p class="hero-subtitle">
+        Afterglow turns vague intentions like <em>"we should hang out soon"</em> into real-life experiences, shareable invitations, and a calendar that's a little less peaceful.
+      </p>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+        <button class="btn btn-primary" onclick="setSimulatorScreen('vibe')">
+          ⚡ Launch Interactive Flow
+        </button>
+        <button class="btn btn-secondary" onclick="setSimulatorScreen('discover')">
+          🔍 Explore Activities
+        </button>
+      </div>
+
+      <!-- HIGHLIGHT FEATURES -->
+      <div style="margin-top: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div style="padding: 16px; border: 2px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-white);">
+          <div style="font-size: 24px; margin-bottom: 8px;">✨</div>
+          <h4 style="margin-bottom: 4px;">Pick the Vibe</h4>
+          <p style="font-size: 13px; color: var(--color-ink-subtle);">Choose your mood: Cozy, Sunshine, Artsy, or Foodie.</p>
+        </div>
+        <div style="padding: 16px; border: 2px solid var(--color-ink); border-radius: var(--radius-md); background: var(--color-white);">
+          <div style="font-size: 24px; margin-bottom: 8px;">💌</div>
+          <h4 style="margin-bottom: 4px;">Shareable Invites</h4>
+          <p style="font-size: 13px; color: var(--color-ink-subtle);">Miniature event poster invitations ready to send to friends.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MOBILE SIMULATOR -->
+    <div id="prototype" class="simulator-container">
+      <div class="simulator-screen">
+        <div class="notch"></div>
+        
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+          <span>9:41</span>
+          <span>5G 🔋</span>
+        </div>
+
+        <!-- TOAST OVERLAY -->
+        <div id="toast" class="toast-notification">
+          <span>❤️</span> <span id="toast-text">Saved to your wishlist</span>
+        </div>
+
+        <!-- VIEWPORT CONTAINING ALL 10 SCREENS -->
+        <div class="app-viewport">
+          
+          <!-- SCREEN 01: WELCOME -->
+          <div id="screen-welcome" class="screen-view active">
+            <div style="text-align: center; padding-top: 20px;">
+              <span class="sticker-tag sticker-cozy" style="margin-bottom: 12px;">hello! ☀️</span>
+              <h2 style="font-size: 32px; line-height: 1.15; margin-bottom: 16px;">
+                Your next favourite memory starts here.
+              </h2>
+              <p style="font-size: 14px; color: var(--color-ink-subtle); margin-bottom: 24px;">
+                Find your people. Find your plans. Get out there.
+              </p>
+              
+              <!-- COLLAGE -->
+              <div style="background: var(--color-butter); border: 2px solid var(--color-ink); border-radius: var(--radius-md); padding: 24px; margin-bottom: 24px;">
+                <div style="font-size: 48px;">🧺 ☕ 🎨</div>
+                <div class="sticker-tag sticker-sunny" style="margin-top: 8px;">Make memories</div>
+              </div>
+
+              <button class="btn btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="setSimulatorScreen('vibe')">
+                Let's make plans
+              </button>
+              <button class="btn" style="width: 100%; border: none; background: transparent; font-size: 13px;" onclick="setSimulatorScreen('discover')">
+                I already have an account
+              </button>
+            </div>
+          </div>
+
+          <!-- SCREEN 02: PICK YOUR VIBE -->
+          <div id="screen-vibe" class="screen-view">
+            <a href="#" onclick="setSimulatorScreen('welcome')" style="text-decoration: none; color: var(--color-ink); font-weight: bold; font-size: 14px;">← Back</a>
+            <h2 style="font-size: 28px; margin: 12px 0 4px;">What sounds like you today?</h2>
+            <p style="font-size: 13px; color: var(--color-ink-subtle); margin-bottom: 16px;">Pick one. You can change your mind later.</p>
+
+            <div class="vibe-grid">
+              <div class="vibe-card selected" style="background: var(--color-butter);" onclick="selectVibe(this, 'Cozy')">
+                <span style="font-size: 24px;">☕</span>
+                <span>Cozy little day</span>
+              </div>
+              <div class="vibe-card" style="background: var(--color-mint);" onclick="selectVibe(this, 'Sunny')">
+                <span style="font-size: 24px;">☀️</span>
+                <span>Out in the sunshine</span>
+              </div>
+              <div class="vibe-card" style="background: var(--color-lavender);" onclick="selectVibe(this, 'Artsy')">
+                <span style="font-size: 24px;">🎨</span>
+                <span>Artsy & curious</span>
+              </div>
+              <div class="vibe-card" style="background: var(--color-coral);" onclick="selectVibe(this, 'Foodie')">
+                <span style="font-size: 24px;">🍽️</span>
+                <span>Food is the plan</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: 24px;" onclick="setSimulatorScreen('discover')">
+              Find my kind of fun
+            </button>
+          </div>
+
+          <!-- SCREEN 03: DISCOVER FEED -->
+          <div id="screen-discover" class="screen-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <div>
+                <span style="font-size: 12px; font-weight: 700; color: var(--color-ink-subtle);">INDIRANAGAR</span>
+                <h3 style="font-size: 20px;">Hey, Aanya 👋</h3>
+              </div>
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: var(--color-coral); border: 1.5px solid var(--color-ink); display: flex; align-items: center; justify-content: center; font-weight: bold;">A</div>
+            </div>
+
+            <h2 style="font-size: 24px; margin-bottom: 16px;">A little fun never hurt.</h2>
+
+            <!-- FILTER CHIPS -->
+            <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 16px;">
+              <button class="sticker-tag sticker-cozy" onclick="filterFeed('All')">All</button>
+              <button class="sticker-tag sticker-sunny" onclick="filterFeed('Sunny')">Sunny</button>
+              <button class="sticker-tag sticker-artsy" onclick="filterFeed('Artsy')">Artsy</button>
+              <button class="sticker-tag sticker-foodie" onclick="filterFeed('Foodie')">Foodie</button>
+            </div>
+
+            <!-- ACTIVITY CARDS -->
+            <div id="feed-container">
+              <div class="activity-card" onclick="openActivity('Golden hour picnic', 'Cubbon Park lawns', '₹250/person', '2 hrs')">
+                <div class="card-img-placeholder" style="background: var(--color-butter);">
+                  🧺 🌅
+                  <div class="heart-btn" onclick="toggleHeart(event, 'Golden hour picnic')">♡</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                  <span class="sticker-tag sticker-sunny">Outdoorsy</span>
+                  <span style="font-size: 12px; font-weight: 700;">1.4 km</span>
+                </div>
+                <h3 style="font-size: 18px; margin-bottom: 4px;">Golden hour picnic</h3>
+                <p style="font-size: 12px; color: var(--color-ink-subtle);">Blankets, snacks, zero agenda. The plan is: there is no plan.</p>
+                <div style="margin-top: 8px; font-size: 12px; font-weight: 700;">2 hrs · ₹250 / person</div>
+              </div>
+
+              <div class="activity-card" onclick="openActivity('Pottery & iced coffee', 'The Clay Room', '₹600/person', '3 hrs')">
+                <div class="card-img-placeholder" style="background: var(--color-lavender);">
+                  🏺 ☕
+                  <div class="heart-btn" onclick="toggleHeart(event, 'Pottery & iced coffee')">♡</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                  <span class="sticker-tag sticker-artsy">Artsy</span>
+                  <span style="font-size: 12px; font-weight: 700;">2.8 km</span>
+                </div>
+                <h3 style="font-size: 18px; margin-bottom: 4px;">Pottery & iced coffee</h3>
+                <p style="font-size: 12px; color: var(--color-ink-subtle);">Get your hands messy and enjoy cold brews with friends.</p>
+                <div style="margin-top: 8px; font-size: 12px; font-weight: 700;">3 hrs · ₹600 / person</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SCREEN 04: ACTIVITY DETAILS -->
+          <div id="screen-activity" class="screen-view">
+            <a href="#" onclick="setSimulatorScreen('discover')" style="text-decoration: none; color: var(--color-ink); font-weight: bold; font-size: 14px;">← Back feed</a>
+            
+            <div style="background: var(--color-butter); border: 2px solid var(--color-ink); border-radius: var(--radius-md); padding: 32px; text-align: center; margin: 16px 0;">
+              <div style="font-size: 56px;">🧺 🌅</div>
+            </div>
+
+            <span class="sticker-tag sticker-sunny" style="margin-bottom: 8px;">Outdoorsy</span>
+            <h2 id="activity-title" style="font-size: 26px; margin-bottom: 4px;">Golden hour picnic</h2>
+            <p id="activity-location" style="font-size: 13px; color: var(--color-ink-subtle); margin-bottom: 12px;">Cubbon Park lawns · 1.4 km away</p>
+
+            <div style="display: flex; gap: 12px; margin-bottom: 16px; font-size: 13px; font-weight: 700;">
+              <span style="background: var(--color-white); padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-ink);">⏳ 2 hrs</span>
+              <span style="background: var(--color-white); padding: 6px 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-ink);">🏷️ ₹250/person</span>
+            </div>
+
+            <h4 style="margin-bottom: 8px;">Why you might love it</h4>
+            <ul style="font-size: 13px; color: var(--color-ink-subtle); padding-left: 20px; margin-bottom: 20px;">
+              <li>Easy on the budget, big on the mood</li>
+              <li>Golden light for the best group photo</li>
+              <li>Works for 2 friends or 6</li>
+            </ul>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="setSimulatorScreen('make_plan')">
+              Make this a plan
+            </button>
+          </div>
+
+          <!-- SCREEN 05: MAKE A PLAN -->
+          <div id="screen-make-plan" class="screen-view">
+            <a href="#" onclick="setSimulatorScreen('activity')" style="text-decoration: none; color: var(--color-ink); font-weight: bold; font-size: 14px;">← Back</a>
+            <h2 style="font-size: 24px; margin: 12px 0 16px;">Make it a plan</h2>
+
+            <div style="background: var(--color-white); border: 1.5px solid var(--color-ink); padding: 12px; border-radius: var(--radius-sm); margin-bottom: 16px;">
+              <strong>Golden hour picnic</strong>
+              <div style="font-size: 12px; color: var(--color-ink-subtle);">Cubbon Park lawns</div>
+            </div>
+
+            <label style="font-weight: 700; font-size: 13px;">Pick a day</label>
+            <div style="display: flex; gap: 8px; margin: 8px 0 16px;">
+              <button class="btn btn-secondary" style="flex: 1; padding: 8px;">Fri 23</button>
+              <button class="btn btn-coral" style="flex: 1; padding: 8px;">Sat 24</button>
+              <button class="btn" style="flex: 1; padding: 8px; background: white;">Sun 25</button>
+            </div>
+
+            <label style="font-weight: 700; font-size: 13px;">Pick a time</label>
+            <div style="display: flex; gap: 8px; margin: 8px 0 16px;">
+              <button class="btn" style="flex: 1; padding: 8px; background: white; font-size: 12px;">10 am</button>
+              <button class="btn btn-secondary" style="flex: 1; padding: 8px; font-size: 12px;">4:30 pm</button>
+              <button class="btn" style="flex: 1; padding: 8px; background: white; font-size: 12px;">7 pm</button>
+            </div>
+
+            <label style="font-weight: 700; font-size: 13px;">Note to friends</label>
+            <input type="text" value="Bring snacks. Bring sunglasses." style="width: 100%; padding: 10px; border-radius: var(--radius-sm); border: 1.5px solid var(--color-ink); margin: 8px 0 20px; font-family: var(--font-sans);">
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="setSimulatorScreen('invite')">
+              Pick your people →
+            </button>
+          </div>
+
+          <!-- SCREEN 06: INVITE FRIENDS -->
+          <div id="screen-invite" class="screen-view">
+            <a href="#" onclick="setSimulatorScreen('make-plan')" style="text-decoration: none; color: var(--color-ink); font-weight: bold; font-size: 14px;">← Back</a>
+            <h2 style="font-size: 24px; margin: 12px 0 16px;">Who's in?</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+              <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: white; border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm);">
+                <span>👩🏽 Meera (@meera.walks)</span>
+                <input type="checkbox" checked>
+              </label>
+              <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: white; border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm);">
+                <span>👨🏻 Kabir (@kabirk)</span>
+                <input type="checkbox" checked>
+              </label>
+              <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: white; border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm);">
+                <span>👩🏻 Tara (@tara.draws)</span>
+                <input type="checkbox">
+              </label>
+              <label style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background: white; border: 1.5px solid var(--color-ink); border-radius: var(--radius-sm);">
+                <span>👨🏽 Rohan (@rohan.eats)</span>
+                <input type="checkbox" checked>
+              </label>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="setSimulatorScreen('invitation')">
+              Preview invitation (3)
+            </button>
+          </div>
+
+          <!-- SCREEN 07: INVITATION PREVIEW -->
+          <div id="screen-invitation" class="screen-view">
+            <div style="background: var(--color-white); border: 2.5px solid var(--color-ink); border-radius: var(--radius-md); padding: 20px; box-shadow: var(--shadow-pop); margin-bottom: 20px;">
+              <span class="sticker-tag sticker-sunny" style="margin-bottom: 8px;">Event Poster</span>
+              <h3 style="font-size: 20px; margin-bottom: 8px;">Plot twist: we're actually making plans ✨</h3>
+              <div style="font-size: 14px; font-weight: 700; color: var(--color-coral-dark);">Golden hour picnic</div>
+              <div style="font-size: 12px; color: var(--color-ink-subtle);">Sat 24 Oct · 4:30 pm</div>
+              <div style="font-size: 12px; color: var(--color-ink-subtle); margin-bottom: 12px;">Cubbon Park lawns</div>
+              <div style="font-size: 12px; background: var(--color-cream); padding: 8px; border-radius: var(--radius-sm);">
+                "Bring snacks. Bring sunglasses."
+              </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-bottom: 10px;" onclick="setSimulatorScreen('celebration')">
+              Send invite ✨
+            </button>
+            <button class="btn" style="width: 100%; background: white;" onclick="showToast('Invitation link copied!')">
+              Copy plan details
+            </button>
+          </div>
+
+          <!-- SCREEN 08: CELEBRATION -->
+          <div id="screen-celebration" class="screen-view">
+            <div style="text-align: center; padding-top: 40px;">
+              <div style="font-size: 64px; margin-bottom: 12px;">🎉</div>
+              <h2 style="font-size: 28px; margin-bottom: 8px;">It's happening!</h2>
+              <p style="font-size: 13px; color: var(--color-ink-subtle); margin-bottom: 24px;">
+                Invites are on their way to Meera, Kabir, and Rohan.
+              </p>
+              <button class="btn btn-primary" style="width: 100%;" onclick="setSimulatorScreen('plans')">
+                See my plans
+              </button>
+            </div>
+          </div>
+
+          <!-- SCREEN 09: SAVED WISHLIST -->
+          <div id="screen-saved" class="screen-view">
+            <h2 style="font-size: 24px; margin-bottom: 4px;">Saved</h2>
+            <p style="font-size: 12px; color: var(--color-ink-subtle); margin-bottom: 16px;">2 little maybes</p>
+
+            <div class="activity-card">
+              <span class="sticker-tag sticker-sunny">Outdoorsy</span>
+              <h3 style="font-size: 16px; margin-top: 4px;">Golden hour picnic</h3>
+            </div>
+            <div class="activity-card">
+              <span class="sticker-tag sticker-artsy">Artsy</span>
+              <h3 style="font-size: 16px; margin-top: 4px;">Pottery & iced coffee</h3>
+            </div>
+          </div>
+
+          <!-- SCREEN 10: MY PLANS -->
+          <div id="screen-plans" class="screen-view">
+            <h2 style="font-size: 24px; margin-bottom: 16px;">Your plans</h2>
+            
+            <div style="background: var(--color-white); border: 2px solid var(--color-ink); border-radius: var(--radius-md); padding: 14px; margin-bottom: 12px;">
+              <span class="sticker-tag sticker-sunny" style="font-size: 10px;">SAT 24 OCT</span>
+              <h4 style="font-size: 16px; margin-top: 4px;">Golden hour picnic</h4>
+              <div style="font-size: 12px; color: var(--color-ink-subtle);">4:30 pm · Cubbon Park</div>
+              <div style="margin-top: 8px; font-size: 11px; font-weight: 700; color: green;">✓ 2 of 4 replied</div>
+            </div>
+          </div>
+
+          <!-- SCREEN 11: PROFILE -->
+          <div id="screen-profile" class="screen-view">
+            <div style="text-align: center; margin-bottom: 20px;">
+              <div style="width: 64px; height: 64px; border-radius: 50%; background: var(--color-coral); border: 2px solid var(--color-ink); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold;">A</div>
+              <h3 style="font-size: 20px;">Aanya Rao</h3>
+              <p style="font-size: 12px; color: var(--color-ink-subtle);">Chasing golden hours & good coffee ☕</p>
+            </div>
+
+            <h4 style="font-size: 14px; margin-bottom: 8px;">Favourite vibes</h4>
+            <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+              <span class="sticker-tag sticker-cozy">Cozy</span>
+              <span class="sticker-tag sticker-artsy">Artsy</span>
+              <span class="sticker-tag sticker-foodie">Foodie</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- BOTTOM NAV BAR -->
+        <div class="bottom-nav">
+          <div class="nav-item active" onclick="setSimulatorNav('discover', this)">
+            <span>🔍</span>
+            <span>Discover</span>
+          </div>
+          <div class="nav-item" onclick="setSimulatorNav('saved', this)">
+            <span>♡</span>
+            <span>Saved</span>
+          </div>
+          <div class="nav-item" onclick="setSimulatorNav('plans', this)">
+            <span>📅</span>
+            <span>Plans</span>
+          </div>
+          <div class="nav-item" onclick="setSimulatorNav('profile', this)">
+            <span>👤</span>
+            <span>Profile</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN SYSTEM SECTION -->
+  <section id="design-system" class="design-system-section">
+    <div class="ds-container">
+      <span class="sticker-tag sticker-artsy">Design Architecture</span>
+      <h2 style="font-size: 36px; margin: 12px 0 24px;">Afterglow System Specs</h2>
+
+      <h3>Color Palette</h3>
+      <div class="palette-grid">
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-cream);"></div>
+          <strong>Cream</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#FFF7E8</div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-butter);"></div>
+          <strong>Butter</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#F6D66B</div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-coral);"></div>
+          <strong>Coral</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#FF796C</div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-lavender);"></div>
+          <strong>Lavender</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#B9A5F8</div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-mint);"></div>
+          <strong>Mint</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#9FD9BC</div>
+        </div>
+        <div class="swatch-card">
+          <div class="swatch-color" style="background: var(--color-ink);"></div>
+          <strong style="color: black;">Deep Ink</strong>
+          <div style="font-size: 12px; color: var(--color-ink-subtle);">#302D48</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    function setSimulatorScreen(screenId) {
+      document.querySelectorAll('.screen-view').forEach(el => el.classList.remove('active'));
+      const target = document.getElementById('screen-' + screenId);
+      if(target) target.classList.add('active');
+    }
+
+    function setSimulatorNav(screenId, navEl) {
+      setSimulatorScreen(screenId);
+      document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+      if(navEl) navEl.classList.add('active');
+    }
+
+    function selectVibe(cardEl, vibeName) {
+      document.querySelectorAll('.vibe-card').forEach(el => el.classList.remove('selected'));
+      cardEl.classList.add('selected');
+      showToast('Selected vibe: ' + vibeName);
+    }
+
+    function toggleHeart(e, activityName) {
+      e.stopPropagation();
+      const btn = e.currentTarget;
+      if(btn.innerText === '♡') {
+        btn.innerText = '❤️';
+        showToast('Saved "' + activityName + '" to wishlist');
+      } else {
+        btn.innerText = '♡';
+        showToast('Removed from wishlist');
+      }
+    }
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-text').innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    function openActivity(title, location, price, duration) {
+      document.getElementById('activity-title').innerText = title;
+      document.getElementById('activity-location').innerText = location + ' · 1.4 km away';
+      setSimulatorScreen('activity');
+    }
+
+    function filterFeed(category) {
+      showToast('Filtered by: ' + category);
+    }
+  </script>
+</body>
+</html>
